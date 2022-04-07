@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <p id="demo"></p>
+        <p id="demo1"></p>
+        <p id="demo2"></p>
+        <p id="demo3"></p>
+        <p id="demo4"></p>
+        <script>
+            const cars=[ 
+                "Benz",
+                "BMW",
+                "Volvo",
+                "Tesla"
+            ];
+            cars[2]="skoda";
+            document.getElementById("demo").innerHTML= cars;
+            var bikes=[];
+            bikes[0]="Hero";
+            bikes[1]="Yamaha";
+            bikes[2]="Honda";
+            bikes[0]="TVS"
+            document.getElementById("demo1").innerHTML= bikes;
+
+            const sports=new Array("Cricket","Hockey","Football");
+            sports[2]="Baseball";
+            document.getElementById("demo2").innerHTML= sports;
+
+            const person={firstname:"Venky",lastname:"Tiruveedula",no:50};
+            document.getElementById("demo3").innerHTML=person.firstname ;
+            
+            const fruits=["mango","apple","watermelon","banana"];
+            document.getElementById("demo4").innerHTML=fruits[fruits.length-1];
+        </script>
+    </body>
+</html>
