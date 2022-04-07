@@ -5,7 +5,7 @@
     </head>
     <body>
         <h3>SignUp</h3>
-        <form name="demo" onsubmit="myFunction()">
+        <form name="form" onsubmit="myFunction()">
             <label type="text">FirstName:</label>
             <input  type="text" name="fname" placeholder="Enter your FName"><br><br>
             <label type="text">LastName:</label>
@@ -14,16 +14,16 @@
             <input type="text" name="Epassword" placeholder="Enter your FName"><br><br>
             <label type="text">ConfirmPassword:</label>
             <input type="text" name="Cpassword" placeholder="Enter your FName"><br><br>
-            <!-- <input type="submit" value="Login"/> -->
-            <button onclick="myFunction()">Submit</button>
-            <button type="submit">Cancel</button>git config --global user.email "you@example.com"
-            git config --global user.name "Your Name"
+            <input type="submit" value="Login"/>
+           
+            <button type="submit">Cancel</button>
           
         </form>
         <script>
  function myFunction()
  {
-document.write("First Name:"+ "</br>"+document.demo.fname.value+"</br> "+"Last Name:"+document.form.lname.value);
+document.write("First Name:"+document.form.fname.value+"</br> "+"Last Name:"+document.form.lname.value+
+"<br>"+"Password:"+document.form.Epassword.value+"<br>"+"CPassword:"+document.form.Cpassword.value);
  }
         </script>
     </body>
