@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <h2>Multiplicaton and Dvision</h2>
+    <body>
+
+        <form id="demo">
+        <label type="id">1st Number:</label>
+        <input type="id" id="FirstNumber" placeholder="Enter your 1stNumber"><br><br>
+        <label type="id">2nd Number:</label>
+        <input type="id" id="SecondNumber" placeholder="Enter your Number"><br><br>
+        <input type="submit" value="Multiple" onclick="Multiple()">
+        <input type="submit" value="Divide"  onclick="Divide()">
+        </form>
+          
+        <script>
+            function Multiple()
+            {
+                let a=document.getElementById("FirstNumber").value;
+                let b=document.getElementById("SecondNumber").value;
+                document.getElementById("demo").innerHTML="The Result is"+a*b;
+            }
+            function Divide()
+            {
+                a=document.getElementById("FirstNumber").value;
+                b=document.getElementById("SecondNumber").value;
+                document.getElementById("demo").innerHTML="The Result is"+a/b;
+            }
+        </script>
+    </body>
+</html>

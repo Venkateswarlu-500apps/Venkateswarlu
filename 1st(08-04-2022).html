@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <button onclick="start()">Alphabatical Order</button><br><br>
+        <button onclick="runreverse()">Reverse Order</button>
+        <script>
+        let Users= [{name:'500apps',id:1},
+        {name:'Technologies',id:2},
+        {name:'Agile',id:3},
+        {name:'Mantra',id:4},
+        {name:'Clockly',id:5},
+        {name:'CRM',id:6},
+        {name:'500apps',id:7}]
+
+        let field='name';
+        let reverse=Users.sort((a,b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        function start(){
+        console.log(Users.sort((a,b) => (a[field] || "").toString().localeCompare((b[field] || "").toString())));
+        }
+        function runreverse(){
+        console.log(reverse.reverse())
+        }
+        
+        </script>
+    </body>
+</html>
