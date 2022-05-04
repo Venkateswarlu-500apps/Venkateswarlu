@@ -1,0 +1,36 @@
+CREATE TABLE Employee (
+  EMP_ID INTEGER PRIMARY KEY,
+  NAME TEXT NOT NULL,
+  ROLE TEXT NOT NULL,
+  PHONE_NUMBER INTEGER NOT NULL,
+  ADDRESS TEXT NOT NULL
+);
+
+-- insert a data in table
+insert INTO Employee values(1177,'Venkateswarlu','FrontEnd',7386871350,'Punjagutta');
+insert INTO Employee values(1175,'Krishna','FrontEnd',7386526267,'S.R.Nagar');
+insert INTO Employee values(1176,'Sai Krishna','FrontEnd',1234567890,'Madhapur');
+insert INTO Employee values(1178,'Mahesh','FrontEnd',0987654321,'Madhapur');
+insert INTO Employee values(1185,'Abishek','FrontEnd',1597538426,'Durgam Chervu');
+
+-- employee table query
+select * from employee;
+
+-- update a data in table
+update Employee
+SET PHONE_NUMBER=8919338755
+where EMP_ID=1176;
+
+update Employee
+SET PHONE_NUMBER=1234567890
+where EMP_ID=1185;
+
+-- employee table query
+select * from employee;
+
+-- drop a column in table
+alter table Employee
+drop column ADDRESS;
+
+-- employee table query
+select * from employee;
