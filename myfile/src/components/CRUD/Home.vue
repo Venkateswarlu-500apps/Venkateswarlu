@@ -9,15 +9,17 @@
       >
     </nav>
     <br /><br />
-    <b-button v-b-modal.modal-1 variant="success" id="button1"
+    <b-button v-b-modal.modal-prevent-closing variant="success" id="button1"
       >Add Details</b-button
     >
     <b-modal
-      id="modal-1"
+      id="modal-prevent-closing"
       v-model="Show"
       :title="Title"
       header-bg-variant="primary"
       body-bg-variant="info"
+      @show="resetModal"
+      @hidden="resetModal"
       hide-footer
     >
       <b-form @submit="savedData">
@@ -69,13 +71,12 @@
       </b-form>
     </b-modal>
     <br /><br />
-    <Card :result="result" @edit="Edit" @delete="Delete"></Card>
+    <Card :result="result" @edit="Edit" @delete="Delete"> </Card>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-//import moment from "moment";
 import Card from "./Card.vue";
 export default {
   name: "VueHome",
@@ -90,39 +91,41 @@ export default {
         gender: "",
         dateofbirth: "",
       },
-      
 
       options: [
         { value: "Male", text: "Male" },
         { value: "Female", text: "Female" },
       ],
 
-      editDetails: this.details,
+      savedDetails: null,
+      editedDetails: this.result,
       Show: false,
-      editIndex: -1,
+      editedIndex: -1,
       result: [],
     };
   },
   computed: {
     Title() {
-      return this.editIndex === -1 ? "Add Details" : "Edit Details";
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
   },
   methods: {
+    resetModal() {
+      this.details = {};
+      this.savedDetails = null;
+    },
     savedData() {
-      this.result.push(
-         this.details
-      );
+      this.result.push(this.details);
       console.log(this.result);
-      this.Close();
+      this.$nextTick(() => {
+        this.$bvModal.hide("modal-prevent-closing");
+      });
     },
-    Close() {
-      this.Show = false;
-    },
+
     Edit(item) {
       this.Show = true;
-      this.editIndex = this.result.indexOf(item);
-      this.editDetails = Object.assign({}, item);
+      this.editedIndex = this.result.indexOf(item);
+      this.editedDetails = Object.assign({}, item);
     },
     Delete(item) {
       this.item = "";
@@ -149,6 +152,7 @@ export default {
   },
 };
 </script>
+
 
 <style>
 #card {
