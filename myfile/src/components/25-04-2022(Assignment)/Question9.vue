@@ -2,24 +2,27 @@
   <div>
     <h1>Spread Operator</h1>
     <button @click="fun()">Click Me</button>
+    {{ans}}
   </div>
 </template>
 
 <script>
 export default {
   name: "VenkY",
+
   data() {
     return {
-      arr: [1, 2, 3, 4, 5,],
-      arr2: [6,7, 8, 9,10],
-      res: [],
+      array1: [1, 2, 3, 4, 5, 6, 7],
+      ans: "",
     };
   },
+
   methods: {
     fun() {
-      (this.res = [this.arr,this.arr2]), 
-       document.write(this.res);
+      this.ans = ['a',...this.array1];
+      return this.ans;
     },
   },
 };
 </script>
+

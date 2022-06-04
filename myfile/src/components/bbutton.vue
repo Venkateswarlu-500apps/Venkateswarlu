@@ -32,7 +32,8 @@
   </b-button-group>
   <br><br>
   <h4>Table</h4>
-   <b-table striped hover :items="items"></b-table>
+   <b-table striped hover :items="items">
+   </b-table>
  </div>  
 </template>
 

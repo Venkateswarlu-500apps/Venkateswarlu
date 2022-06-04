@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       posts: " ",
-      fields: ["name", "country", "web_pages"],
+      fields: ["name", "country", "web_pages.[0]"],
     };
   },
   methods: {

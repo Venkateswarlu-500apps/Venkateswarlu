@@ -1,34 +1,69 @@
 <template>
-    <div>
+    <div >
         <h1>Question1</h1>
         <b-form-select align="left" v-model="value" :options="countries" class="w-50"></b-form-select>&nbsp;
-        <b-button @click="fun()" variant="success">Click</b-button><br><br>
-        <input type="text" id="Search" @keyup="search()" placeholder="Search here"/><br><br>
-        <b-table stripped hover :items="res" :fields="fields"></b-table>
-        <ul id="UL">
-            <li><a></a></li>
-            <li><a></a></li>
-        </ul>
+        <b-button @click="fun()" variant="success">Click</b-button>
+        <b-container>
+        <b-row>
+        <b-col lg="6" class="my-3">
+        <b-form-group label="Filter" label-for="filter-input" label-cols-sm="3" label-align-sm="right" label-size="sm" class="mb-0">
+        <b-input-group size="sm">
+        <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search"></b-form-input>
+        <b-input-group-append>
+        <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+        </b-input-group-append>
+        </b-input-group>
+        </b-form-group>
+        </b-col>
+        <b-col lg="6" class="my-1">
+        <b-form-group v-model="sortDirection" label="Filter On" label-cols-sm="3" label-align-sm="right" label-size="sm"
+          class="mb-0" v-slot="{ ariaDescribedby }">
+        <b-form-checkbox-group v-model="filterOn" :aria-describedby="ariaDescribedby" class="mt-1">
+            <b-form-checkbox value="name">university_name</b-form-checkbox>
+            <b-form-checkbox value="domains">domains</b-form-checkbox>
+            <b-form-checkbox value="website_url">website_url</b-form-checkbox>
+            <b-form-checkbox value="state_province">state_province</b-form-checkbox>
+        </b-form-checkbox-group>
+        </b-form-group>
+        </b-col>
+        </b-row>
+        </b-container>
+        <b-table stripped hover :items="res" :fields="fields" :filter="filter" :sort-direction="sortDirection"
+        :filter-included-fields="filterOn" >
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+  </b-table>
+  <p v-for="item in res" :key="item">
+    <span v-text="item">
+      </span>
+  </p>
+  
+  
     </div>
 </template>
 <script>
 import axios from 'axios';
+import InfiniteLoading from 'vue-infinite-loading';
 const { getNames } = require("country-list");
 export default{
     name:'VenkY',
+    components:{
+      InfiniteLoading
+  },
     data(){
         return{
             value: " ",
             res: " ",
             countries: [],
-            fields:['university_name','domains','website_url','state_province']
+            fields:['university_name','domains','website_url','state_province'],
+            filter:null,
+            filterOn:[],
         }
     },
     mounted(){
       var countries = getNames();
       this.countries = countries.map((row)=> {
           return { value : row, text : row}
-      })
+      });
     },
 
     methods:{
@@ -47,25 +82,16 @@ export default{
                 }
             });
         },
-        search() {
-            var input, filter, ul, li, a, i, txtValue;
-            input=document.getElementById("Search");
-            filter=input.value.toUpperCase();
-            ul=document.getElementById("UL");
-            li=ul.getElementsByTagName("li");
-            for(i=0;i<li.length;i++)
-            {
-                a=li[i].getElementsByTagName("a")[0];
-                txtValue=a.textContent||a.innerHTML;
-
-                if(txtValue.toUpperCase().indexOf(filter)>-1){
-                    li[i].style.display=" ";
-                }
-                else{
-                    li[i].style.display="none";
-                }
-            }
+        infiniteHandler($state) {
+      setTimeout(() => {
+        const temp = [];
+        for (let i = this.res.length + 1; i <= this.res.length + 20; i++) {
+          temp.push(i);
         }
-    }
-}
+        this.res = this.res.concat(temp);
+        $state.loaded();
+      }, 1000);
+    },
+  },
+  }
 </script>

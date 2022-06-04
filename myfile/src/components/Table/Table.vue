@@ -1,8 +1,9 @@
 <template>
   <div>
+    
     <SideBar></SideBar>
     <br />
-
+    <input type="file" ref="doc" id="file" />
     <b-form id="form">
       <b-form-input
         type="text"
@@ -43,7 +44,7 @@
     <b-button type="submit" variant="danger" id="multiple" @click="Delete"
       >Multiple delete <b-icon icon="dash-circle"></b-icon
     ></b-button>
-    <b-button type="submit" variant="primary" id="import"
+    <b-button type="submit" variant="primary" id="import" @click="read_File()"
       >Import
 
       <b-icon
@@ -51,19 +52,20 @@
 "
       ></b-icon
     ></b-button>
-    <b-button type="submit" variant="primary" id="export"
+    <b-button type="submit" variant="primary" id="export" @click="Export()"
       >Export
       <b-icon
         icon="arrow-bar-up
 "
       ></b-icon></b-button
     ><br />
+
     <center>
       <b-table
         striped
         hover
         id="table"
-        :items="(tableData = content)"
+        :items="tableData"
         :fields="columns"
         :filter="filter"
         bordered
@@ -120,15 +122,15 @@
         ><br />
       </b-form>
     </b-modal>
-    <input type="file" ref="doc" @change="read_File()" />
-    <div id="file">{{ content }}</div>
+
+    <!-- <div id="file">{{ content }}</div> -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import exportFromJSON from "export-from-json";
 import SideBar from "./SideBar.vue";
-
 export default {
   name: "TableData",
   props: ["columns", "formFields"],
@@ -143,7 +145,6 @@ export default {
       tableData: [],
       filter: null,
       file: null,
-      content: [],
     };
   },
 
@@ -184,7 +185,7 @@ export default {
           if (value) {
             const index = this.tableData.indexOf(item);
             this.tableData.splice(index, 1);
-            axios.delete(this.endpoint + "/" + value.id);
+            axios.delete("/" + value.id);
           } else return;
         });
     },
@@ -213,21 +214,58 @@ export default {
       const reader = new FileReader();
       if (this.file.name.includes(".txt")) {
         reader.onload = (res) => {
-          this.content = res.target.result;
+          this.tableData = res.target.result;
         };
         reader.onerror = (err) => console.log(err);
         reader.readAsText(this.file);
       } else {
-        this.content = ["check the console for file output"];
+        this.tableData = ["check the console for file output"];
         reader.onload = (res) => {
-          document.getElementById("file").innerHTML = res.target.result;
+          //document.getElementById("file").innerHTML = res.target.result;
+          const csvtoobject = (csv) => {
+            const myArray = csv.split("\n");
+            const keys = myArray[0].split(",");
+            return myArray.splice(1).map((myArray) => {
+              return myArray.split(",").reduce((acc, cur, i) => {
+                const toAdd = {};
+                toAdd[keys[i]] = cur;
+                return { ...acc, ...toAdd };
+              }, {});
+            });
+          };
+          const converted = res.target.result;
+          console.log(csvtoobject(converted));
+          this.tableData = csvtoobject(converted);
+          console.log(this.tableData);
+          return this.tableData;
         };
-        reader.onerror = (err) => console.log(err);
-        reader.readAsText(this.file);
+        reader.onerror = (err) => console.log(err)
+        reader.readAsText(this.file)
       }
     },
-  },
 
+    Export() {
+      const objectToCsv = function (data) {
+        const csvRows = [];
+        const headers = Object.keys(data[0]);
+        csvRows.push(headers.join(","));
+        for (const row of data) {
+          const values = headers.map((header) => {
+            const val = row[header];
+            return `"${val}"`;
+          });
+          csvRows.push(values.join(","));
+        }
+        return csvRows.join("\n");
+      };
+      const data = this.tableData;
+      const csvData = objectToCsv(data);
+      console.log(csvData);
+      const fileName = "TableData";
+      const exportType = exportFromJSON.types.csv;
+      exportFromJSON({ data, fileName, exportType });
+    },
+  },
   created() {
     axios().then((response) => (this.tableData = response.data.data));
   },
@@ -290,13 +328,13 @@ export default {
 
 #import {
   position: relative;
-  left: -610px;
+  left: -400px;
   top: -88px;
 }
 
 #export {
   position: relative;
-  left: -590px;
+  left: -380px;
   top: -88px;
 }
 
@@ -321,5 +359,11 @@ export default {
   position: relative;
   top: -94px;
   left: 935px;
+}
+
+#file {
+  position: relative;
+  top: 138px;
+  left: -481px;
 }
 </style>

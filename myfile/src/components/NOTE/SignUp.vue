@@ -1,10 +1,15 @@
 <template>
-  <div>
+  <div style="background-color: powderblue">
     <nav class="navbar navbar-expand-lg fixed-top row" variant="info">
       <center><h1>Note</h1></center>
     </nav>
     <br />
-    <b-container>
+    <br /><marquee width="400" style="color: green"
+      ><b>*Welcome to the Note-Pad*</b></marquee
+    >
+    <br /><br />
+    <!-- Sign Up Form -->
+    <b-container class="w-25">
       <b-card
         header="Enter Your Details"
         header-text-variant="white"
@@ -12,9 +17,12 @@
         header-bg-variant="secondary"
         bg-variant="info"
         border-variant="dark"
+        style="height: 20rem"
       >
-        <b-form @submit.prevent="signUp">
-          <b-form-input
+        <b-form @submit="signUp">
+          <b-row
+            ><b-col align="left"> <b>UserName:</b></b-col></b-row
+          ><b-form-input
             type="text"
             id="User-Name"
             v-model="UserDetails.UserName"
@@ -23,7 +31,9 @@
             required
           ></b-form-input
           ><br />
-          <b-form-input
+          <b-row
+            ><b-col align="left"><b>Password:</b></b-col></b-row
+          ><b-form-input
             type="password"
             id="User-Password"
             v-model="UserDetails.Password"
@@ -31,20 +41,32 @@
             placeholder="Password"
             required
           ></b-form-input
-          ><br />
-          <b-button
-            type="submit"
-            variant="success"
-            @click="signUp"
-            v-b-modal.open
-          >
+          ><br /><br />
+
+          <b-button type="submit" variant="success" @click="signUp()">
             Sign Up
           </b-button>
         </b-form>
       </b-card>
     </b-container>
+    <div style="margin-top: 390px">
+      <p>Copyright 1999-2022 by V Technologies. All Rights Reserved.</p>
+      <center>
+        <b-card bg-variant="danger" style="max-width: 25rem; height: 4rem"
+          ><b-icon
+            icon="chat-left-text"
+            variant="warning"
+            scale="2"
+            shift-h="-20"
+            shift-v="-4"
+          ></b-icon
+          ><b>Powered by V Technologies Pvt.Ltd</b> <b-icon icon="fade"></b-icon
+        ></b-card>
+      </center>
+    </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -58,7 +80,18 @@ export default {
     };
   },
   methods: {
+    // <!-- Sign Up Function -->
     signUp() {
+      // <!-- Validation -->
+      if (this.UserDetails.UserName && this.UserDetails.Password) {
+        alert("Sign Up Succesfully");
+        this.$router.push("/Home");
+        //window.location.assign("http://localhost:8080/#/Home");
+      } else {
+        alert("Please fill the below details");
+      }
+
+      // <!-- Cookies -->
       this.UserDetails.UserName = document.getElementById("User-Name").value;
       this.UserDetails.Password =
         document.getElementById("User-Password").value;
@@ -79,41 +112,30 @@ export default {
         ";expires=" +
         expire.toUTCString();
 
-      // localStorage.setItem("UserName", JSON.stringify(this.UserDetails.UserName));
-      // localStorage.setItem("Password", JSON.stringify(this.UserDetails.Password));
+      // <!-- Local Storage -->
+      localStorage.setItem(
+        "UserName",
+        JSON.stringify(this.UserDetails.UserName)
+      );
+      localStorage.setItem(
+        "Password",
+        JSON.stringify(this.UserDetails.Password)
+      );
 
-      // sessionStorage.setItem("UserName", JSON.stringify(this.UserDetails.UserName));
-      // sessionStorage.setItem("Password", JSON.stringify(this.UserDetails.Password));
-
-      Array.from(document.getElementsByClassName("UN")).forEach(function (
-        element
-      ) {
-        element.addEventListener("click", (e) => {
-          // retrieve current cart if it exists. If it doesn't create an empty cart
-          //this.UserDetails.UserName = JSON.parse(localStorage.getItem("UserName")) || [];
-          //this.UserDetails.Password = JSON.parse(localStorage.getItem("Password")) || [];
-
-          let newItem = {
-            UserName: e.target.dataset.UserName,
-            Password: e.target.dataset.Password,
-          };
-          this.UserDetails.UserName.push(newItem);
-          this.UserDetails.Password.push(newItem);
-
-          localStorage.setItem(
-            "UserName",
-            JSON.stringify(this.UserDetails.UserName)
-          );
-          localStorage.setItem(
-            "Password",
-            JSON.stringify(this.UserDetails.UserName)
-          );
-        });
-      });
+      // <1-- Session Storage -->
+      sessionStorage.setItem(
+        "UserName",
+        JSON.stringify(this.UserDetails.UserName)
+      );
+      sessionStorage.setItem(
+        "Password",
+        JSON.stringify(this.UserDetails.Password)
+      );
     },
   },
 };
 </script>
+
 <style scoped>
 nav {
   display: block;

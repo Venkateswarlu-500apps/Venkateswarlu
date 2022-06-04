@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Univerity-Data</h1>
+        <h1>University-Data</h1>
         <form>
         Search Country:<input type="text" placeholder="Enter Country Name">
         <button @click="UData()">Click</button>
