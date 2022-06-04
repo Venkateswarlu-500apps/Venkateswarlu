@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <h1>Moveing All Zero to End of the Array</h1>
+    <p id="demo"></p>
+    <button onclick="fun()">Click</button>
+    <body>
+        <script>
+            let arr = [1, 2, 0, 4, 3, 0, 5, 0];
+            function fun(){
+
+             let ans=arr.filter((v) => v!=0 );
+
+             let ans1=arr.filter((j) => j==0)
+             document.getElementById("demo").innerHTML=ans+","+ans1;
+
+            }
+            
+        </script>
+    </body>
+</html>

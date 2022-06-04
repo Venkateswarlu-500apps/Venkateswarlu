@@ -2,14 +2,14 @@
     <div>
         <b class="mt-3">Current Page: {{ currentPage }}</b>
         <b-card no-body>
-            <b-tabs card bg-variant="secondary">
+            <b-tabs card>
                 <b-tab v-for="i in tabs" :key="i" :title="'Table' + i">
                     <b-button size="sm" variant="danger" class="float-right" @click="closeTab(i)">Close Tab</b-button>
+                    <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" 
+        aria-controls="my-table" align="center"></b-pagination>
                     <b-table striped hover id="my-table" :items="res" :fields="fields" 
                     :per-page="perPage" :current-page="currentPage">
                     </b-table>
-                     <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" 
-                     aria-controls="my-table"></b-pagination>
                 </b-tab>
                 <template #tabs-end>
                     <b-nav-item role="presentation" @click="newTab" href="#"><b>+</b></b-nav-item>
@@ -45,7 +45,6 @@ export default{
                 }
             }
         },
-        
     },
     computed:{
             rows(){

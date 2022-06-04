@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Question1</h1>
+        <h1>Question2</h1>
         <b-form-select align="left" v-model="value" :options="countries" class="w-50"></b-form-select>&nbsp;
         <b-button @click="fun()" variant="success">Click</b-button><br><br>
         <input type="text" id="Search" @keyup="search()" placeholder="Search here"/><br><br>
@@ -8,7 +8,7 @@
         <b-table id="my-table" :per-page="perPage" :current-page="currentPage" stripped hover :items="res" :fields="fields"></b-table>
 <b-container mt=5>
 <div class="row mt=3">
-<div class="col-md-3">
+<div class="col-md-3" id="my-table">
 <div class="p-2 alert alert-secondary">
 <h3>University List1</h3>
 <draggable class="list-group kanban-column" group="tasks" :per-page="perPage" :current-page="currentPage">

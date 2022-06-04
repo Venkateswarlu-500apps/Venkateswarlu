@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p id="demo">This is Callback<p>
+    <script>
+
+//Synchronous
+
+console.log(" I ");
+
+console.log(" eat ");
+
+console.log(" Ice Cream ");
+
+//Asynchronous
+setTimeout(()=>{
+
+// This will be shown after 10 seconds
+
+console.log("I");
+
+console.log("eat");
+
+console.log("Ice Cream");
+},(10000))
+
+function One(){
+    return "Hello";
+}
+function Two()
+{
+    return "Welcome";
+}
+document.getElementById("demo").innerHTML=Two(One);
+    </script>
+    </body>
+</html>

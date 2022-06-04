@@ -1,9 +1,11 @@
 <template>
   <div>
+    <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg fixed-top row">
       <center><h1>Note</h1></center>
       <b-avatar variant="info" id="avatar"></b-avatar>
       <div>
+        <!-- Side Bar Button -->
         <b-button
           v-b-toggle.sidebar-1
           class="float-left"
@@ -19,24 +21,43 @@
             shift-h="8"
           ></b-icon>
         </b-button>
+
+        <!-- Side Bar -->
         <b-sidebar id="sidebar-1" bg-variant="dark" text-variant="light">
           <b-button-group vertical id="my">
-            <b-button type="button" squared variant="outline-light" size="lg"
+            <!-- Save All Button -->
+            <b-button
+              type="button"
+              squared
+              variant="outline-light"
+              size="lg"
+              @click="saveAll()"
               >Save All</b-button
             ><br />
 
-            <b-button type="button" squared variant="outline-light" size="lg"
+            <!-- Clear All Button -->
+            <b-button
+              type="button"
+              squared
+              variant="outline-light"
+              size="lg"
+              @click="clearAll()"
               >Clear All</b-button
             ><br />
 
-            <b-button type="button" squared variant="outline-light" size="lg"
+            <!-- Log Out Button -->
+            <b-button
+              type="button"
+              squared
+              variant="outline-light"
+              size="lg"
+              @click="logOut()"
               >Log Out</b-button
             >
           </b-button-group>
         </b-sidebar>
       </div>
     </nav>
-    <b-collapse> </b-collapse>
   </div>
 </template>
 
@@ -46,16 +67,27 @@ export default {
   components: {},
   data() {
     return {
-      //active: false
+
     };
   },
   methods: {
-    // mouseover(){
-    //     this.active = !this.active;
-    // }
+    logOut() {
+      this.$router.push("/Login");
+    },
+    clearAll() {
+      this.$emit("clear");
+    },
+    saveAll() {
+      this.$emit("save");
+      alert("Opening");
+    },
+    over() {
+     
+    }
   },
 };
 </script>
+
 <style scoped>
 nav {
   display: block;

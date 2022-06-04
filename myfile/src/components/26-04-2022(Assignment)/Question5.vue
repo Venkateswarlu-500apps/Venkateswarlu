@@ -9,14 +9,12 @@
       <b-card v-for="data in posts" :key="data.id">
         <b-container class="bv-example-row">
           <b-row>
-            <b-col>University Name:{{ data.name }}</b-col>
+            <b-col>University Name:{{ data.university_name }}</b-col>
           </b-row>
-
           <b-row>
             <b-col>Domains:{{ data.domains }}</b-col>&nbsp;
-
-            <b-col>
-                Website:<b-link href="#http://universities.hipolabs.com/search?country=">{{ data.web_pages[0] }}</b-link>
+            <b-col @click="redirect(data.website_url)">
+            Website:<b-link href=" " redirect>{{ data.website_url }}</b-link>
             </b-col>
           </b-row>
         </b-container>
@@ -32,24 +30,30 @@ export default {
   data() {
     return {
       posts: "",
+    
     };
   },
 
   methods: {
+    redirect(data){
+      window.open(data,"_blank");
+    },
     async getData() {
-      try {
         let response = await fetch("http://universities.hipolabs.com/search?country=" + this.text);
-
-        this.posts = await response.json();
-      } 
-      catch (error) {
-        console.log(error);
-      }
+        let responseText = await response.json();
+        this.posts = responseText.map((row) => {
+          return{
+            university_name: row.name,
+            domains: row.domains,
+            website_url: row.web_pages[0],
+            state_province: row["state-province"],
+          };
+        });
     },
   },
 
   created() {
-    this.getData1();
+    this.getData();
   },
 };
 </script>

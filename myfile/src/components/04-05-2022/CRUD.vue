@@ -7,7 +7,6 @@
         </b-form>
         <b-button type="submit" @click="create()" variant="success">Create</b-button><br><br>
         <center>
-        
         <b-table stripped hover :items="tabledata" :fields="fields" class="w-50">
         <b-button type="submit" @click="Update(data.data)" variant="warning">Update</b-button>&nbsp;
         <b-button type="submit" @click="Delete(data.data)" variant="danger">Delete</b-button>
