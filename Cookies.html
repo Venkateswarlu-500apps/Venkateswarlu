@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form</title>
+    </head>
+    <body>
+        <h3>SignUp Form</h3>
+        <form name="form" onsubmit="myFunction()">
+            <label type="text">FirstName:</label>
+            <input  type="text" name="fname" id="demo" placeholder="Enter your FName"><br><br>
+            <label type="text">LastName:</label>
+            <input type="text" name="lname" id="demo1" placeholder="Enter your LName"><br><br>
+            <label type="text">EnterPassword:</label>
+            <input type="text" name="Epassword" id="demo2" placeholder="Enter your Password"><br><br>
+            <label type="text">ConfirmPassword:</label>
+            <input type="text" name="Cpassword" id="demo3" placeholder="Enter your ConfirmPassword"><br><br>
+            <button type="submit" onclick="Cookie()">Submit</button>
+            
+        </form>
+        <script>
+ function myFunction()
+ {
+document.write("First Name:"+document.form.fname.value+"</br> "+"Last Name:"+document.form.lname.value+
+"<br>"+"Password:"+document.form.Epassword.value+"<br>"+"CPassword:"+document.form.Cpassword.value);
+ }
+ function Cookie() {
+let fname = document.getElementById("demo");
+let lname= document.getElementById("demo1");
+let Epassword=document.getElementById("demo2");
+today = new Date()
+var expire = new Date();
+expire.setTime(today.getTime() + 3600000 * 24 * 15);
+document.cookie = "name=" + fname.value + ";path=/" + ";expires=" + expire.toUTCString();
+document.cookie = "Name=" + lname.value + ";path=/" + ";expires=" + expire.toUTCString();
+document.cookie = "Epassword=" + encodeURI(Epassword.value) + ";path=/" + ";expires=" + expire.toUTCString();
+}
+        </script>
+    </body>
+</html>
